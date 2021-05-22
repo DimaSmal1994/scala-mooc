@@ -3,6 +3,7 @@ package homeworks.collections
 import homeworks.HomeworksUtils.TaskSyntax
 
 object task_caesar {
+  val Letter_A: Int = 'A'.toInt
 
   /**
    * В данном задании Вам предлагается реализовать функции,
@@ -17,15 +18,30 @@ object task_caesar {
    * @param offset сдвиг вперёд по алфавиту
    * @return зашифрованное слово
    */
-  def encrypt(word: String, offset: Int): String =
-    task"Реализуйте метод `encrypt`"()
+  def encrypt(word: String, offset: Int): String = {
+    word.map(charr => {
+      val numberCode = charr.toInt - Letter_A
+      val encryptedCode = (numberCode + offset % 26) % 26 + Letter_A
+      encryptedCode.toChar
+    })
+  }
 
   /**
    * @param cipher шифр, который необходимо расшифровать
    * @param offset сдвиг вперёд по алфавиту
    * @return расшифрованное слово
    */
-  def decrypt(cipher: String, offset: Int): String =
-    task"Реализуйте метод `decrypt`"()
+  def decrypt(cipher: String, offset: Int): String = {
+    cipher.map(charr => {
+      val numberCode = charr.toInt - Letter_A
+      if (numberCode - offset >= 0) {
+        val encryptedCode = (numberCode - offset % 26) % 26 + Letter_A
+        encryptedCode.toChar
+      } else {
+        val encryptedCode = (numberCode - offset % 26 + 26) % 26 + Letter_A
+        encryptedCode.toChar
+      }
+    })
+  }
 
 }
